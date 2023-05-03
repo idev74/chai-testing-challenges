@@ -45,8 +45,11 @@ router.post('/', (req, res) => {
 router.put('/:messageId', (req, res) => {
     Message.findByIdAndUpdate(req.params.messageId, req.body)
         .then(() => {
-            return res.json({ message })
-        }).catch((err) => {
+            return Message.findById(req.params.messageId)
+        })
+        .then(message => {
+            return res.json(message)
+        }).catch(err => {
             throw err.message
         })
 })
